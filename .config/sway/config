@@ -1,42 +1,26 @@
-# Default config for sway
-#
-# Copy this to ~/.config/sway/config and edit it to your liking.
-#
-# Read `man 5 sway` for a complete reference.
-
-### Variables
-#
-# Logo key. Use Mod1 for Alt.
+# variables
 set $mod Mod4
-# Home row direction keys, like vim
+
 set $left h
 set $down j
 set $up k
 set $right l
-# Your preferred terminal emulator
+
 set $term kitty 
-# Your preferred application launcher
+
 set $menu rofi
 
-### Output configuration
-#
-# Default wallpaper (more resolutions are available in /usr/share/backgrounds/sway/)
-output * bg /usr/share/backgrounds/sway/Sway_Wallpaper_Blue_1920x1080.png fill
+exec swaybg -i /home/joe/eye.jpg -m center
 
 # autorun programas 
-
 exec_always waybar
+exec_always nm-applet
 
-### Idle configuration
-
+# Idle configuration
 exec swayidle -w \
          timeout 300 'swaylock -f -c 000000' \
          timeout 600 'swaymsg "output * power off"' resume 'swaymsg "output * power on"' \
          before-sleep 'swaylock -f -c 000000'
-#
-# This will lock your screen after 300 seconds of inactivity, then turn off
-# your displays after another 300 seconds, and turn your screens back on when
-# resumed. It will also lock your screen before your computer goes to sleep.
 
 # Touchpad config 
   input type:touchpad {
@@ -51,7 +35,7 @@ exec swayidle -w \
       # pointer_accel 0.5 # set mouse sensitivity (between -1 and 1)
   }
 
-# Gestures configtap
+# Gestures config
 bindgesture swipe:4:left workspace next
 bindgesture swipe:4:right workspace prev
 
@@ -65,16 +49,15 @@ bindgesture swipe:3:right move right
 bindgesture swipe:3:up move up
 bindgesture swipe:3:down move down
 
-#
-# You can also configure each device individually.
-# Read `man 5 sway-input` for more information about this section.
 
-### Key bindings
-#
-# Basics:
-#
+# Key bindings
+    # toggle waybar
+    bindsym $mod+period exec pkill -SIGUSR1 waybar
+
     # Start a terminal
     bindsym $mod+Return exec $term
+
+    bindsym $mod+e exec kitty nvim 
 
     # Kill focused window
     bindsym $mod+q kill
@@ -83,11 +66,6 @@ bindgesture swipe:3:down move down
     bindsym $mod+space exec rofi -show drun
     bindsym $mod+Tab exec rofi -show window 
 
-    # Drag floating windows by holding down $mod and left mouse button.
-    # Resize them with right mouse button + $mod.
-    # Despite the name, also works for non-floating windows.
-    # Change normal to inverse to use left mouse button for resizing and right
-    # mouse button for dragging.
     floating_modifier $mod normal
 
     # Reload the configuration file
@@ -95,9 +73,7 @@ bindgesture swipe:3:down move down
 
     # Exit sway (logs you out of your Wayland session)
     bindsym $mod+Shift+e exec swaynag -t warning -m 'You pressed the exit shortcut. Do you really want to exit sway? This will end your Wayland session.' -B 'Yes, exit sway' 'swaymsg exit'
-#
-# Moving around:
-#
+
     # Move your focus around
     bindsym $mod+$left focus left
     bindsym $mod+$down focus down
@@ -111,7 +87,6 @@ bindgesture swipe:3:down move down
     bindsym $mod+Shift+$right move right
     
 # Workspaces:
-#
     bindsym $mod+Ctrl+$right workspace next
     bindsym $mod+Ctrl+$left workspace prev
 
@@ -138,13 +113,9 @@ bindgesture swipe:3:down move down
     bindsym $mod+Shift+9 move container to workspace number 9
     bindsym $mod+Shift+0 move container to workspace number 10
     # Note: workspaces can have any name you want, not just numbers.
-    # We just use 1-10 as the default.
-#
+
 # Layout stuff:
-#
-    # You can "split" the current object of your focus with
-    # $mod+b or $mod+v, for horizontal and vertical splits
-    # respectively.
+
     bindsym $mod+i splith
     bindsym $mod+u splitv
 
@@ -164,39 +135,27 @@ bindgesture swipe:3:down move down
 
     # Move focus to the parent container
     bindsym $mod+grave focus parent
-#
-# Scratchpad:
-#
-    # Sway has a "scratchpad", which is a bag of holding for windows.
-    # You can send windows there and get them back later.
 
-    # Move the currently focused window to the scratchpad
+# Scratchpad
     bindsym $mod+Shift+Escape move scratchpad
 
-    # Show the next scratchpad window or hide the focused scratchpad window.
-    # If there are multiple scratchpad windows, this command cycles through them.
     bindsym $mod+Escape scratchpad show
-#
+
 # Resizing containers:
-#
+
 mode "resize" {
-    # left will shrink the containers width
-    # right will grow the containers width
-    # up will shrink the containers height
-    # down will grow the containers height
     bindsym $left resize shrink width 10px
     bindsym $down resize grow height 10px
     bindsym $up resize shrink height 10px
     bindsym $right resize grow width 10px
 
-    # Return to default mode
     bindsym Return mode "default"
     bindsym Escape mode "default"
 }
 bindsym $mod+r mode "resize"
-#
+
 # Utilities:
-#
+
     # Special keys to adjust volume via PulseAudio
     bindsym --locked XF86AudioMute exec pactl set-sink-mute \@DEFAULT_SINK@ toggle
     bindsym --locked XF86AudioLowerVolume exec pactl set-sink-volume \@DEFAULT_SINK@ -5%
@@ -205,25 +164,14 @@ bindsym $mod+r mode "resize"
     # Special keys to adjust brightness via brightnessctl
     bindsym --locked XF86MonBrightnessDown exec brightnessctl set 5%-
     bindsym --locked XF86MonBrightnessUp exec brightnessctl set 5%+
+
+    #media keys
+    bindsym XF86AudioNext exec playerctl next
+    bindsym XF86AudioPrev exec playerctl previous
     # Special key to take a screenshot with grim
     bindsym $mod+Shift+s exec grim
 
-#
-# Status Bar (replaced with waybar)
-#
-# Read `man 5 sway-bar` for more information about this section.
-# bar {
-#     position bottom 
-#
-#     # When the status_command prints a new line to stdout, swaybar updates.
-#     # The default just shows the current date and time.
-#     status_command while date +'%Y-%m-%d %X'; do sleep 1; done
-#
-#     colors {
-#         statusline #ffffff
-#         background #323232
-#         inactive_workspace #32323200 #32323200 #5c5c5c
-#     }
-# }
+# Aesthetics
+    default_border pixel 1
 
 include /etc/sway/config.d/*

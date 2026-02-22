@@ -48,6 +48,8 @@ require "oil".setup({
 		-- showing hidden files :3
 		show_hidden = true
 	},
+
+	prompt_save_on_select_new_entry = true,
 })
 
 -- require "plenary".setup()
