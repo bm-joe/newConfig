@@ -4,7 +4,7 @@ if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]
 fi
 
 export ZSH="$HOME/.oh-my-zsh"
-export PATH="$HOME/.local/share/bob/nightly/bin:$PATH"
+export PATH="$HOME/.cargo/bin:$HOME/.local/share/bob/nightly/bin:$PATH"
 
 ZSH_THEME="powerlevel10k/powerlevel10k"
 

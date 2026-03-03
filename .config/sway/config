@@ -49,6 +49,8 @@ bindgesture swipe:3:right move right
 bindgesture swipe:3:up move up
 bindgesture swipe:3:down move down
 
+output eDP-1 mode 2560x1600@240Hz
+
 
 # Key bindings
     # toggle waybar
@@ -57,7 +59,7 @@ bindgesture swipe:3:down move down
     # Start a terminal
     bindsym $mod+Return exec $term
 
-    bindsym $mod+e exec kitty nvim 
+    bindsym $mod+e exec neovide  
 
     # Kill focused window
     bindsym $mod+q kill
@@ -141,6 +143,8 @@ bindgesture swipe:3:down move down
 
     bindsym $mod+Escape scratchpad show
 
+    # Special key to take a screenshot with grim
+    bindsym $mod+Shift+s exec grim -g "$(slurp)" - | wl-copy
 # Resizing containers:
 
 mode "resize" {
@@ -153,6 +157,8 @@ mode "resize" {
     bindsym Escape mode "default"
 }
 bindsym $mod+r mode "resize"
+
+bindsym $mod+button3 resize
 
 # Utilities:
 
@@ -168,8 +174,8 @@ bindsym $mod+r mode "resize"
     #media keys
     bindsym XF86AudioNext exec playerctl next
     bindsym XF86AudioPrev exec playerctl previous
-    # Special key to take a screenshot with grim
-    bindsym $mod+Shift+s exec grim
+    bindsym XF86AudioPlay exec playerctl play-pause
+
 
 # Aesthetics
     default_border pixel 1
