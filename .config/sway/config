@@ -65,9 +65,9 @@ output eDP-1 mode 2560x1600@60Hz
     bindsym $mod+q kill
 
     # Start your launcher
-    bindsym $mod+space exec rofi -show drun
-    bindsym $mod+Shift+space exec rofi -show run
-    bindsym $mod+Tab exec rofi -show window 
+    bindsym $mod+space exec $menu -show drun
+    bindsym $mod+Shift+space exec $menu -show run
+    bindsym $mod+Tab exec $menu -show window 
 
     floating_modifier $mod normal
 
