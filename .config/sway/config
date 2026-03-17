@@ -44,12 +44,12 @@ bindgesture swipe:4:down floating disabled
 
 bindgesture hold:4 exec playerctl play-pause
 
-bindgesture swipe:3:left move left 
-bindgesture swipe:3:right move right
-bindgesture swipe:3:up move up
-bindgesture swipe:3:down move down
+bindgesture swipe:3:left move left 100px
+bindgesture swipe:3:right move right 100px
+bindgesture swipe:3:up move up 100px
+bindgesture swipe:3:down move down 100px
 
-output eDP-1 mode 2560x1600@240Hz
+output eDP-1 mode 2560x1600@60Hz
 
 
 # Key bindings
@@ -66,6 +66,7 @@ output eDP-1 mode 2560x1600@240Hz
 
     # Start your launcher
     bindsym $mod+space exec rofi -show drun
+    bindsym $mod+Shift+space exec rofi -show run
     bindsym $mod+Tab exec rofi -show window 
 
     floating_modifier $mod normal
@@ -74,7 +75,7 @@ output eDP-1 mode 2560x1600@240Hz
     bindsym $mod+Shift+c reload
 
     # Exit sway (logs you out of your Wayland session)
-    bindsym $mod+Shift+e exec swaynag -t warning -m 'You pressed the exit shortcut. Do you really want to exit sway? This will end your Wayland session.' -B 'Yes, exit sway' 'swaymsg exit'
+    # bindsym $mod+Shift+e exec swaynag -t warning -m 'You pressed the exit shortcut. Do you really want to exit sway? This will end your Wayland session.' -B 'Yes, exit sway' 'swaymsg exit'
 
     # Move your focus around
     bindsym $mod+$left focus left

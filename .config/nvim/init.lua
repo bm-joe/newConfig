@@ -1,8 +1,11 @@
--- vim settings
+-- vim settingsinit
 -- note to self : DISABLE THE F1 KEY PLSS
 vim.opt.number = true
 vim.opt.relativenumber = true
-vim.opt.swapfile = false 
+vim.opt.swapfile = false
+vim.opt.tabstop = 3
+vim.opt.shiftwidth = 3
+
 -- style arguments: rounded, single, double, solid, none
 vim.opt.winborder = "single"
 -- leader key
@@ -13,16 +16,17 @@ vim.keymap.set('n', '<leader>w', ':write<CR>')
 vim.keymap.set('n', '<leader>q', ':quit<CR>')
 -- format doc
 vim.keymap.set('n', '<leader>f', vim.lsp.buf.format)
-
+-- enable spellcheck
+vim.keymap.set('n', '<leader>t', vim.cmd('setlocal spell spelllang=en_us'))
 -- neovide copy and pasting
 if vim.g.neovide then
-  local function save() vim.cmd.write() end
-  local function copy() vim.cmd([[normal! "+y]]) end
-  local function paste() vim.api.nvim_paste(vim.fn.getreg("+"), true, -1) end
+	local function save() vim.cmd.write() end
+	local function copy() vim.cmd([[normal! "+y]]) end
+	local function paste() vim.api.nvim_paste(vim.fn.getreg("+"), true, -1) end
 
-  vim.keymap.set({ "n", "i", "v" }, "<C-s>", save, { desc = "Save" })
-  vim.keymap.set("v", "<C-c>", copy, { silent = true, desc = "Copy" })
-  vim.keymap.set({ "n", "i", "v", "c", "t" }, "<C-v>", paste, { silent = true, desc = "Paste" })
+	vim.keymap.set({ "n", "i", "v" }, "<C-s>", save, { desc = "Save" })
+	vim.keymap.set("v", "<C-c>", copy, { silent = true, desc = "Copy" })
+	vim.keymap.set({ "n", "i", "v", "c", "t" }, "<C-v>", paste, { silent = true, desc = "Paste" })
 end
 
 --setting fontsize for neovide
@@ -51,6 +55,7 @@ vim.api.nvim_create_autocmd("BufReadCmd", {
 	end
 })
 
+
 -- vibecoded:
 vim.api.nvim_create_user_command("Trm", function()
 	local file_dir = vim.fn.expand("%:p:h")
@@ -58,23 +63,35 @@ vim.api.nvim_create_user_command("Trm", function()
 end, {})
 
 -- packages w/nightly package manager
+-- java loool
+vim.pack.add({
+	{
+		src = 'https://github.com/JavaHello/spring-boot.nvim',
+		version = '218c0c26c14d99feca778e4d13f5ec3e8b1b60f0',
+	},
+	'https://github.com/MunifTanjim/nui.nvim',
+	'https://github.com/mfussenegger/nvim-dap',
 
+	'https://github.com/nvim-java/nvim-java',
+})
 vim.pack.add({
 	{ src = "https://github.com/nyoom-engineering/oxocarbon.nvim" },
 	{ src = "https://github.com/neovim/nvim-lspconfig" },
 	{ src = "https://github.com/nvim-telescope/telescope-fzf-native.nvim" },
 	{ src = "https://github.com/chomosuke/typst-preview.nvim" },
 	{ src = "https://github.com/Myriad-Dreamin/tinymist" },
-	-- consider adding oil (seems to be a file explorer of sorts)
 	{ src = "https://github.com/stevearc/oil.nvim" },
-	-- consider adding mini.pick, but it seems to be a worse version of telescope
 	{ src = "https://github.com/nvim-telescope/telescope.nvim" },
 	{ src = "https://github.com/nvim-lua/plenary.nvim" },
-	{src = "https://github.com/nvim-treesitter/nvim-treesitter"},
+	{ src = "https://github.com/nvim-tree/nvim-web-devicons" },
+	{ src = "https://github.com/nvim-treesitter/nvim-treesitter" },
+	{ src = "https://github.com/lucaSartore/fastspell.nvim" },
+	{ src = "https://github.com/nvim-mini/mini.completion" },
 
 })
 
 -- require plugins and stuff
+require('java').setup()
 require "oil".setup({
 	-- oil config
 	default_file_explorer = true,
@@ -93,8 +110,17 @@ require "oil".setup({
 	prompt_save_on_select_new_entry = true,
 })
 
+-- require "fastspell".setup()
+
 -- require "plenary".setup()
-require "telescope".setup()
+require "telescope".setup({
+	defaults = {
+		path_display = { "smart" },
+		color_devicons = true,
+	},
+})
+
+require "mini.completion".setup()
 require "typst-preview".setup({
 
 	port = 0,
@@ -111,6 +137,7 @@ require "typst-preview".setup({
 -- for executing functions and stuph
 local builtin = require('telescope.builtin')
 
+
 -- plugin keybinds
 vim.keymap.set('n', '<leader>e', ':Oil<CR>')
 vim.keymap.set('n', '<leader><Tab>', ':Telescope<CR>')
@@ -120,18 +147,21 @@ vim.keymap.set('n', '<leader>s',
 		builtin.find_files({
 			search_dirs = {
 				'~/G12',
+				'~/projects',
 				'~/Downloads',
 				'~/.config/nvim',
 				'~/.config/sway',
 				'~/.config/neovide',
 				'~/.config/kitty',
-				'~/.zshrc'
+				'~/scripts',
+				'~/.zshrc',
+				'/mnt/win/Users/burge/Documents/Personal-Projects/',
 			}
 		})
 	end)
 
 -- enabling languages for lsp
-vim.lsp.enable({  "tinymist", "lua_ls" })
+vim.lsp.enable({ "jdtls", "tinymist", "lua_ls", "clangd" })
 -- fix vim errors
 vim.lsp.config("lua_ls", {
 	settings = {
