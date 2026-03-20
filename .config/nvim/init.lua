@@ -14,20 +14,27 @@ vim.g.mapleader = " "
 -- keybinds: "mode" "button" "action"
 vim.keymap.set('n', '<leader>w', ':write<CR>')
 vim.keymap.set('n', '<leader>q', ':quit<CR>')
+vim.keymap.set('n', '<leader>t', ':tabnew %<CR>')
 -- format doc
 vim.keymap.set('n', '<leader>f', vim.lsp.buf.format)
--- enable spellcheck
-vim.keymap.set('n', '<leader>t', vim.cmd('setlocal spell spelllang=en_us'))
+vim.keymap.set('n', '<leader>a', vim.diagnostic.open_float)
 -- neovide copy and pasting
 if vim.g.neovide then
-	local function save() vim.cmd.write() end
 	local function copy() vim.cmd([[normal! "+y]]) end
 	local function paste() vim.api.nvim_paste(vim.fn.getreg("+"), true, -1) end
 
-	vim.keymap.set({ "n", "i", "v" }, "<C-s>", save, { desc = "Save" })
-	vim.keymap.set("v", "<C-c>", copy, { silent = true, desc = "Copy" })
-	vim.keymap.set({ "n", "i", "v", "c", "t" }, "<C-v>", paste, { silent = true, desc = "Paste" })
+	vim.keymap.set("v", "<C-C>", copy, { silent = true, desc = "Copy" })
+	vim.keymap.set({ "n", "i", "v", "c", "t" }, "<C-V>", paste, { silent = true, desc = "Paste" })
 end
+
+-- autosave command
+vim.o.autowriteall = true
+vim.api.nvim_create_autocmd({ 'InsertLeavePre', 'TextChanged', 'TextChangedP' }, {
+	pattern = '*',
+	callback = function()
+		vim.cmd('silent! write')
+	end
+})
 
 --setting fontsize for neovide
 vim.o.guifont = "JetBrainsMono Nerd Font Mono:h20"
@@ -47,7 +54,7 @@ vim.api.nvim_create_autocmd("BufReadCmd", {
 
 -- images
 vim.api.nvim_create_autocmd("BufReadCmd", {
-	pattern = { "*.png", "*.jpg", "*.jpeg", "*.gif", "*.webp" },
+	pattern = { "*.svg", "*.png", "*.jpg", "*.jpeg", "*.gif", "*.webp" },
 	callback = function()
 		local filename = vim.fn.shellescape(vim.api.nvim_buf_get_name(0))
 		vim.cmd("silent !firefox " .. filename .. " &")
@@ -87,11 +94,36 @@ vim.pack.add({
 	{ src = "https://github.com/nvim-treesitter/nvim-treesitter" },
 	{ src = "https://github.com/lucaSartore/fastspell.nvim" },
 	{ src = "https://github.com/nvim-mini/mini.completion" },
+	{ src = "https://github.com/brianhuster/live-preview.nvim" },
+	{ src = "https://github.com/ej-shafran/compile-mode.nvim" },
+	{ src = "https://github.com/scalameta/nvim-metals" },
+	-- { src = "https://github.com/romgrk/barbar.nvim" },
+	{ src = "https://github.com/lewis6991/gitsigns.nvim" },
+	{ src = "https://github.com/mfussenegger/nvim-dap" },
 
 })
-
+-- local metals = require("metals")
+-- local metals_config = metals.bare_config()
+-- metals_config.capabilities = vim.lsp.protocol.make_client_capabilities()
+-- local nvim_metals_group = vim.api.nvim_create_augroup("nvim-metals", { clear = true })
+-- vim.api.nvim_create_autocmd("FileType", {
+-- 	pattern = { "scala", "sbt" },
+-- 	callback = function()
+-- 		require("metals").initialize_or_attach(metals_config)
+-- 	end,
+-- 	group = nvim_metals_group,
+-- })
 -- require plugins and stuff
 require('java').setup()
+-- require "barbar".setup({
+-- 	auto_hide = false,
+--
+-- })
+--
+vim.g.compile_mode = {
+	default_command = "",
+}
+require('livepreview.config').set()
 require "oil".setup({
 	-- oil config
 	default_file_explorer = true,
@@ -138,7 +170,10 @@ require "typst-preview".setup({
 local builtin = require('telescope.builtin')
 
 
+
 -- plugin keybinds
+vim.keymap.set('n', '<leader>r', ':below Recompile<CR>')
+vim.keymap.set('n', '<leader>R', ':below Compile<CR>')
 vim.keymap.set('n', '<leader>e', ':Oil<CR>')
 vim.keymap.set('n', '<leader><Tab>', ':Telescope<CR>')
 -- find files
@@ -161,7 +196,7 @@ vim.keymap.set('n', '<leader>s',
 	end)
 
 -- enabling languages for lsp
-vim.lsp.enable({ "jdtls", "tinymist", "lua_ls", "clangd" })
+vim.lsp.enable({ "jdtls", "tinymist", "lua_ls", "clangd", "html", "cssls", "tailwindcss", "ts_ls", "jsonls", "metals" })
 -- fix vim errors
 vim.lsp.config("lua_ls", {
 	settings = {

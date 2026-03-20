@@ -1,5 +1,13 @@
 {
   "plugins": {
+    "barbar.nvim": {
+      "rev": "539d73def39c9172b4d4d769f14090e08f37b29d",
+      "src": "https://github.com/romgrk/barbar.nvim"
+    },
+    "compile-mode.nvim": {
+      "rev": "6b41499bd782be2c213011072ce0f0eb9f7b78a2",
+      "src": "https://github.com/ej-shafran/compile-mode.nvim"
+    },
     "fastspell.nvim": {
       "rev": "c7343a923862330e46001a8e45f698fb9afac2b3",
       "src": "https://github.com/lucaSartore/fastspell.nvim"
@@ -7,6 +15,14 @@
     "fleur.nvim": {
       "rev": "32bf4f6268ffdadca4fe6aef6c79f756755a5304",
       "src": "https://github.com/aikhe/fleur.nvim"
+    },
+    "gitsigns.nvim": {
+      "rev": "7c4faa3540d0781a28588cafbd4dd187a28ac6e3",
+      "src": "https://github.com/lewis6991/gitsigns.nvim"
+    },
+    "live-preview.nvim": {
+      "rev": "c1fcf75c5f9c9c01dd392852de44204b60f1b5b1",
+      "src": "https://github.com/brianhuster/live-preview.nvim"
     },
     "mini.completion": {
       "rev": "4f94cafdeef02bf3ef9997cd6862658801caa22c",
@@ -27,6 +43,10 @@
     "nvim-lspconfig": {
       "rev": "44acfe887d4056f704ccc4f17513ed41c9e2b2e6",
       "src": "https://github.com/neovim/nvim-lspconfig"
+    },
+    "nvim-metals": {
+      "rev": "7ed47cd3095508e80423e30922385d5b9988f9d6",
+      "src": "https://github.com/scalameta/nvim-metals"
     },
     "nvim-treesitter": {
       "rev": "6bc51d020a5e06b7e20ea82dbc47196d3d3027c7",

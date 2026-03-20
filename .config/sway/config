@@ -59,7 +59,7 @@ output eDP-1 mode 2560x1600@60Hz
     # Start a terminal
     bindsym $mod+Return exec $term
 
-    bindsym $mod+e exec neovide  
+    bindsym $mod+e exec neovide ~
 
     # Kill focused window
     bindsym $mod+q kill
