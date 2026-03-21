@@ -64,6 +64,7 @@ vim.api.nvim_create_autocmd("BufReadCmd", {
 
 
 -- vibecoded:
+-- ** THIS COMMMAND HAS BEEN DEPRECATED BY compile-mode.nvim **
 vim.api.nvim_create_user_command("Trm", function()
 	local file_dir = vim.fn.expand("%:p:h")
 	vim.fn.jobstart({ "kitty", "--working-directory", file_dir }, { detach = true })

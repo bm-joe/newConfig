@@ -1,0 +1,55 @@
+/*notice: this entire thing is vibecoded because i cannot find any firefox css documentation and im too lazy to go into the source files, and im basically just removing ui elements nothing crazy*/
+
+/* removing the zoom percentage icon */
+#urlbar-zoom-button {
+  display: none !important;
+}
+
+#mainPopupSet menupopup,
+#placesContext {
+  --menu-background-color: transparent !important;
+  --arrowpanel-background: transparent !important;
+  --panel-background: transparent !important;
+  --menu-border-color: transparent !important;
+  --arrowpanel-border-color: transparent !important;
+  --panel-border-color: transparent !important;
+}
+
+/* menu, */
+/* menuitem { */
+/*   background-color: transparent !important; */
+/* } */
+
+/* removing close tab button */
+/* .tabbrowser-tab .tab-close-button, */
+/* .tab-close-button, */
+/* .tabbrowser-tab .tab-close-button { */
+/*   display: none !important; */
+/* } */
+
+/* removing window control buttons */
+.titlebar-buttonbox-container,
+#titlebar .titlebar-buttonbox-container,
+#close-button,
+#titlebar-close,
+#window-controls,
+#window-controls-box {
+  display: none !important;
+}
+
+/*removing bottom left thingy */
+#statuspanel,
+#statuspanel-box,
+.statuspanel,
+#webext-statuspanel,
+#web-statuspanel,
+#statusPanel,
+[anonid="statusPanel"],
+#statuspanel-label,
+#statuspanel-text,
+#statuspanel-description {
+  display: none !important;
+  visibility: hidden !important;
+  pointer-events: none !important;
+}
+
