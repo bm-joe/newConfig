@@ -2,17 +2,17 @@
 
 /* removing the zoom percentage icon */
 #urlbar-zoom-button {
-  display: none !important;
+	display: none !important;
 }
 
 #mainPopupSet menupopup,
 #placesContext {
-  --menu-background-color: transparent !important;
-  --arrowpanel-background: transparent !important;
-  --panel-background: transparent !important;
-  --menu-border-color: transparent !important;
-  --arrowpanel-border-color: transparent !important;
-  --panel-border-color: transparent !important;
+	/* --menu-background-color: rgba(0, 0, 0, 0.5) !important; */
+	/* --arrowpanel-background: rgba(0, 0, 0, 0.5) !important; */
+	--panel-background: rgba(0, 0, 0, 0.5); /*!important; - makes transparent menu work, but makes panel selector buggy*/
+	/* --menu-border-color: rgba(0, 0, 0, 0.5) !important; */
+	/* --arrowpanel-border-color: rgba(0, 0, 0, 0.5) !important; */
+	/* --panel-border-color: rgba(0, 0, 0, 0.5) !important; */
 }
 
 /* menu, */
@@ -34,7 +34,7 @@
 #titlebar-close,
 #window-controls,
 #window-controls-box {
-  display: none !important;
+	display: none !important;
 }
 
 /*removing bottom left thingy */
@@ -48,8 +48,7 @@
 #statuspanel-label,
 #statuspanel-text,
 #statuspanel-description {
-  display: none !important;
-  visibility: hidden !important;
-  pointer-events: none !important;
+	display: none !important;
+	visibility: hidden !important;
+	pointer-events: none !important;
 }
-

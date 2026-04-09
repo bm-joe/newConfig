@@ -24,7 +24,7 @@ if vim.g.neovide then
 	local function paste() vim.api.nvim_paste(vim.fn.getreg("+"), true, -1) end
 
 	vim.keymap.set("v", "<C-C>", copy, { silent = true, desc = "Copy" })
-	vim.keymap.set({ "n", "i", "v", "c", "t" }, "<C-V>", paste, { silent = true, desc = "Paste" })
+	vim.keymap.set({ "n", "i", "v", "c", "t" }, "<C-S-V>", paste, { silent = true, desc = "Paste" })
 end
 
 -- autosave command
@@ -47,17 +47,17 @@ vim.api.nvim_create_autocmd("BufReadCmd", {
 	pattern = "*.pdf",
 	callback = function()
 		local filename = vim.fn.shellescape(vim.api.nvim_buf_get_name(0))
-		vim.cmd("silent !firefox " .. filename .. " &")
+		vim.cmd("silent !zen-browser " .. filename .. " &")
 		vim.cmd("let tobedeleted = bufnr('%') | b# | exe \"bd! \" . tobedeleted")
 	end
 })
 
 -- images
 vim.api.nvim_create_autocmd("BufReadCmd", {
-	pattern = { "*.svg", "*.png", "*.jpg", "*.jpeg", "*.gif", "*.webp" },
+	pattern = { "*.png", "*.jpg", "*.jpeg", "*.gif", "*.webp" },
 	callback = function()
 		local filename = vim.fn.shellescape(vim.api.nvim_buf_get_name(0))
-		vim.cmd("silent !firefox " .. filename .. " &")
+		vim.cmd("silent !zen-browser " .. filename .. " &")
 		vim.cmd("let tobedeleted = bufnr('%') | b# | exe \"bd! \" . tobedeleted")
 	end
 })
@@ -103,17 +103,18 @@ vim.pack.add({
 	{ src = "https://github.com/mfussenegger/nvim-dap" },
 
 })
--- local metals = require("metals")
--- local metals_config = metals.bare_config()
--- metals_config.capabilities = vim.lsp.protocol.make_client_capabilities()
--- local nvim_metals_group = vim.api.nvim_create_augroup("nvim-metals", { clear = true })
--- vim.api.nvim_create_autocmd("FileType", {
--- 	pattern = { "scala", "sbt" },
--- 	callback = function()
--- 		require("metals").initialize_or_attach(metals_config)
--- 	end,
--- 	group = nvim_metals_group,
--- })
+local metals = require("metals")
+local metals_config = metals.bare_config()
+metals_config.capabilities = vim.lsp.protocol.make_client_capabilities()
+local nvim_metals_group = vim.api.nvim_create_augroup("nvim-metals", { clear = true })
+vim.api.nvim_create_autocmd("FileType", {
+	pattern = { "scala", "sbt" },
+	callback = function()
+		require("metals").initialize_or_attach(metals_config)
+	end,
+	group = nvim_metals_group,
+})
+
 -- require plugins and stuff
 require('java').setup()
 -- require "barbar".setup({
@@ -197,7 +198,7 @@ vim.keymap.set('n', '<leader>s',
 	end)
 
 -- enabling languages for lsp
-vim.lsp.enable({ "jdtls", "tinymist", "lua_ls", "clangd", "html", "cssls", "tailwindcss", "ts_ls", "jsonls", "metals" })
+vim.lsp.enable({ "jdtls", "tinymist", "lua_ls", "clangd", "html", "cssls", "tailwindcss", "ts_ls", "jsonls" })
 -- fix vim errors
 vim.lsp.config("lua_ls", {
 	settings = {
@@ -212,3 +213,14 @@ vim.lsp.config("lua_ls", {
 
 
 vim.cmd("colorscheme oxocarbon")
+
+-- global transparency
+vim.api.nvim_set_hl(0, "Normal", { bg = "none" })
+vim.api.nvim_set_hl(0, "NormalFloat", { bg = "none" })
+vim.api.nvim_set_hl(0, "NormalNC", { bg = "none" })
+vim.api.nvim_set_hl(0, "LineNr", { bg = "none" })
+vim.api.nvim_set_hl(0, "SignColumn", { bg = "none" })
+vim.api.nvim_set_hl(0, "LineNr", { fg = "#525252" })
+
+--neovide transparency
+vim.g.neovide_opacity = 0.5

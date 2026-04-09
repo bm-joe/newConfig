@@ -1,3 +1,8 @@
+# workspaces stuff
+assign [app_id="spotify"] workspace 1
+assign [class="discord"] workspace 2
+assign [app_id="zen"] workspace 3
+
 # variables
 set $mod Mod4
 
@@ -12,7 +17,10 @@ set $menu rofi
 
 exec swaybg -i /home/joe/eye.jpg -m center
 
-# autorun programas 
+# opening applications 
+exec zen-browser
+
+# autorun programs 
 exec_always waybar
 exec_always nm-applet
 
@@ -51,13 +59,12 @@ blur_saturation 1.0
 # blur_ignore_transparent enable;
 # default_dim_inactive 0.75;
 # }
-# layer_effects "waybar" {
-#     blur enable;
-#     blur_xray disable;
-#     blur_ignore_transparent enable;
-#     shadows enable;
-#     corner_radius 8;
-# }
+layer_effects "waybar" {
+    blur enable;
+    blur_xray disable;
+    blur_ignore_transparent enable;
+    # shadows enable;
+}
 
 # Gestures config
 bindgesture swipe:4:left workspace next
@@ -170,6 +177,7 @@ output eDP-1 mode 2560x1600@60Hz
 
     # Special key to take a screenshot with grim
     bindsym $mod+Shift+s exec grim -g "$(slurp)" - | wl-copy
+	 bindsym Print exec grim
 # Resizing containers:
 
 mode "resize" {
@@ -203,6 +211,7 @@ bindsym $mod+button3 resize
 
 
 # Aesthetics
-    default_border pixel 1
+    default_border none
+	 mouse_warping container
 
 include /etc/sway/config.d/*
